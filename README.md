@@ -1,2 +1,2 @@
 # libgdx.info-Basic_Image
-LibGDX.info: Supporting code for Basic Image tutorial: https://libgdx.info/basic_image/
+LibGDX.info: Supporting code for Basic Label tutorial: https://libgdx.info/basic-label/
