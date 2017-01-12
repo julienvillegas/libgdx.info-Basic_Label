@@ -5,12 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -26,37 +27,53 @@ public class MyGdxGame extends ApplicationAdapter {
 		int col_width = Gdx.graphics.getWidth() / 12;
 		addBackgroundGuide(Help_Guides);
 
-		Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-		Label title = new Label("Centered title label",mySkin,"big-black");
-		title.setSize(Gdx.graphics.getWidth(),row_height);
-		title.setPosition(0,Gdx.graphics.getHeight()-row_height*2);
-		title.setAlignment(Align.center);
-		stage.addActor(title);
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont myFont = new BitmapFont(Gdx.files.internal("bitmapfont/Amble-Regular-26.fnt"));
+		label1Style.font = myFont;
+		label1Style.fontColor = Color.RED;
 
-		Label label1 = new Label("This is a Label on  5 columns but WITHOUT wrap",mySkin,"black");
-		label1.setSize(Gdx.graphics.getWidth()/Help_Guides,row_height);
-		label1.setPosition(col_width*2,Gdx.graphics.getHeight()-row_height*4);
+		Label label1 = new Label("Title (BitmapFont)",label1Style);
+		label1.setSize(Gdx.graphics.getWidth(),row_height);
+		label1.setPosition(0,Gdx.graphics.getHeight()-row_height*2);
+		label1.setAlignment(Align.center);
 		stage.addActor(label1);
 
-		Label label2 = new Label("This is a Label with a 5 columns width but WITH wrap",mySkin,"black");
+
+
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("truetypefont/Amble-Light.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = 30;
+		parameter.borderWidth = 1;
+		parameter.color = Color.YELLOW;
+		parameter.shadowOffsetX = 3;
+		parameter.shadowOffsetY = 3;
+		parameter.shadowColor = new Color(0, 0.5f, 0, 0.75f);
+		BitmapFont font24 = generator.generateFont(parameter); // font size 24 pixels
+		generator.dispose();
+
+		Label.LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = font24;
+
+		Label label2 = new Label("True Type Font (.ttf) - Gdx FreeType",labelStyle);
 		label2.setSize(Gdx.graphics.getWidth()/Help_Guides*5,row_height);
-		label2.setPosition(col_width*2,Gdx.graphics.getHeight()-row_height*5);
-		label2.setWrap(true);
+		label2.setPosition(col_width*2,Gdx.graphics.getHeight()-row_height*4);
 		stage.addActor(label2);
 
-		Label label3 = new Label("Font scaled down",mySkin,"black");
-		label3.setSize(Gdx.graphics.getWidth()/Help_Guides*5,row_height);
+		Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+
+
+		Label label3 = new Label("This is a Label (skin) on  5 columns ",mySkin,"black");
+		label3.setSize(Gdx.graphics.getWidth()/Help_Guides,row_height);
 		label3.setPosition(col_width*2,Gdx.graphics.getHeight()-row_height*6);
-		label3.setFontScale((float)0.5);
 		stage.addActor(label3);
 
-		Label label4 = new Label("Modifying skin (color/background)",mySkin);
+		Label label4 = new Label("This is a Label (skin) with a 5 columns width but WITH wrap",mySkin,"black");
 		label4.setSize(Gdx.graphics.getWidth()/Help_Guides*5,row_height);
 		label4.setPosition(col_width*2,Gdx.graphics.getHeight()-row_height*7);
-		label4.getStyle().fontColor = Color.BLUE;
-		label4.getStyle().background = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("salmon.jpg"))));
+		label4.setWrap(true);
 		stage.addActor(label4);
+
 
 	}
 
